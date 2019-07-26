@@ -5,3 +5,5 @@
 *.cbp
 todo_consolen_tool/todo_consolen_tool.cbp
 *.cbp
+*.project
+*.workspace
