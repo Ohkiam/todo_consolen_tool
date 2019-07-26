@@ -10,7 +10,7 @@
 #include <fstream>
 
 //#undef WINDOWS
-#define WINDOWS
+//#define WINDOWS
 
 void command_help(){
     std::cout << "Hilfe" << std::endl;
@@ -67,13 +67,13 @@ void command_list_tag(){
 int main(int argc, char **argv)
 {
     if(argc < 2){
-        #ifdef WINDOWS
+        #ifdef _Windows
 
             std::cout << "nur prog.exe in Windows aufgerufen" << std::endl;
 
         #else
 
-            std::cout << "nur prog in Windows aufgerufen" << std::endl;
+            std::cout << "nur prog in Linux aufgerufen" << std::endl;
 
         #endif // WINDOWS
 
