@@ -1,6 +1,21 @@
-// Maik Hoffmann
-// C++ Basics E228
-// * Dieses Tool soll das Alter abfragen und ausgeben können
+/// Maik Hoffmann
+/// C++ Basics E228
+/// * Dieses Tool soll das Alter abfragen und ausgeben können
+
+// For Paste and Copy for this script
+/**
+* @description : Beschreibung
+*
+* @param : Angabe sämtlicher Parameter
+*
+* @todo : Was ist noch zu tun?
+*
+*
+* @throws : wirft eine exception (Ausnahme)?
+* @error : erzeugt ein Fehler
+* @return: Was wird zurück gegeben
+*/
+
 
 #include <iostream>
 #include <string.h>
@@ -9,9 +24,34 @@
 #include <cstdio> ///  cstdio.h ist mehr auf c++ angepasst , funzt aber in der IBB nicht, warum auch immer (schlau machen)
 #include <fstream>
 
+
+/// Schalter für Windows/Linux
 //#undef WINDOWS
 #define WINDOWS
 
+///* Zeitstempel für die Todos
+// http://www.willemer.de/informatik/cpp/timelib.htm
+
+
+///* Ein und ausgabe von Dateien
+// https://www.kompf.de/cplus/artikel/fwords.html
+
+
+
+
+
+/**
+* @description : Beschreibung
+*
+* @param : Angabe sämtlicher Parameter
+*
+* @todo : Was ist noch zu tun?
+*
+*
+* @throws : wirft eine exception (Ausnahme)?
+* @error : erzeugt ein Fehler
+* @return: Was wird zurück gegeben
+*/
 void command_help(){
     std::cout << "Hilfe" << std::endl;
     std::cout << "      tag | Schlagwort erstellen" << std::endl;
@@ -20,10 +60,34 @@ void command_help(){
     std::cout << "list_todo | Aufgaben anzeigen" << std::endl;
     return;
 }
+/**
+* @description : Beschreibung
+*
+* @param : Angabe sämtlicher Parameter
+*
+* @todo : Was ist noch zu tun?
+*
+*
+* @throws : wirft eine exception (Ausnahme)?
+* @error : erzeugt ein Fehler
+* @return: Was wird zurück gegeben
+*/
 void comand_err(){
     std::cout << "Sorry, ich weiss nicht was du willst. Diesen Befehl kenne ich nicht" << std::endl;
     return;
 }
+/**
+* @description : Beschreibung
+*
+* @param : Angabe sämtlicher Parameter
+*
+* @todo : Was ist noch zu tun?
+*
+*
+* @throws : wirft eine exception (Ausnahme)?
+* @error : erzeugt ein Fehler
+* @return: Was wird zurück gegeben
+*/
 void command_tag(){
     std::cout << "Schlagwort erstellen" << std::endl;
     std::fstream f;
@@ -34,9 +98,33 @@ void command_tag(){
 	f.close();
 	return;
 }
+/**
+* @description : Beschreibung
+*
+* @param : Angabe sämtlicher Parameter
+*
+* @todo : Was ist noch zu tun?
+*
+*
+* @throws : wirft eine exception (Ausnahme)?
+* @error : erzeugt ein Fehler
+* @return: Was wird zurück gegeben
+*/
 void command_todo(){
     std::cout << "Aufgabe erstellen" << std::endl;
 }
+/**
+* @description : Beschreibung
+*
+* @param : Angabe sämtlicher Parameter
+*
+* @todo : Was ist noch zu tun?
+*
+*
+* @throws : wirft eine exception (Ausnahme)?
+* @error : erzeugt ein Fehler
+* @return: Was wird zurück gegeben
+*/
 void command_list_tag(){
     std::cout << "Schlagwörter: anzeigen lassen " << std::endl;
     std::ifstream f;  // Datei-Handle
@@ -50,6 +138,18 @@ void command_list_tag(){
     }
     f.close();                // Datei wieder schließen
 }
+/**
+* @description : Beschreibung
+*
+* @param : Angabe sämtlicher Parameter
+*
+* @todo : Was ist noch zu tun?
+*
+*
+* @throws : wirft eine exception (Ausnahme)?
+* @error : erzeugt ein Fehler
+* @return: Was wird zurück gegeben
+*/
 void command_list_todo(){
     std::cout << "Aufgaben: " << std::endl;
     std::cout << "hier fragen ob mit tag oder alle abgerufen werden sollen, ja für tag eingabe nur enter für auflisten aller aufgaben" << std::endl;
@@ -68,13 +168,9 @@ int main(int argc, char **argv)
 {
     if(argc < 2){
         #ifdef WINDOWS
-
             std::cout << "nur prog.exe in Windows aufgerufen" << std::endl;
-
         #else
-
-            std::cout << "nur prog in Windows aufgerufen" << std::endl;
-
+            std::cout << "nur prog in Linux aufgerufen" << std::endl;
         #endif // WINDOWS
 
 
@@ -105,6 +201,7 @@ int main(int argc, char **argv)
             command_list_todo();
             return 0;
         }else{
+            std::cout << argv[i] << "haha" << std::endl; /// @todo warum funzt das nicht, warum ruft er bei falschem Befehl zweimal die Funktion command_list_
             comand_err();
             //return 0;
         }
