@@ -9,7 +9,8 @@
 #include <cstdio> ///  cstdio.h ist mehr auf c++ angepasst , funzt aber in der IBB nicht, warum auch immer (schlau machen)
 #include <fstream>
 
-// Test
+//#undef WINDOWS
+#define WINDOWS
 
 void command_help(){
     std::cout << "Hilfe" << std::endl;
@@ -66,7 +67,17 @@ void command_list_tag(){
 int main(int argc, char **argv)
 {
     if(argc < 2){
-        std::cout << "nur prog.exe aufgerufen" << std::endl;
+        #ifdef WINDOWS
+
+            std::cout << "nur prog.exe in Windows aufgerufen" << std::endl;
+
+        #else
+
+            std::cout << "nur prog in Windows aufgerufen" << std::endl;
+
+        #endif // WINDOWS
+
+
         return 0;
     }
     int i;
