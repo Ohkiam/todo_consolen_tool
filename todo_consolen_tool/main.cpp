@@ -6,7 +6,7 @@
 #include <string.h>
 #include <cstdlib>
 #include <cstring>
-#include <stdio.h>
+#include <stdio.h> ///  cstdio.h ist mehr auf c++ angepasst , funzt aber in der IBB nicht, warum auch immer (schlau machen)
 #include <fstream>
 
 
