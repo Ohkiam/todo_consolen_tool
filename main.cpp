@@ -9,6 +9,7 @@
 #include <cstdio> ///  cstdio.h ist mehr auf c++ angepasst , funzt aber in der IBB nicht, warum auch immer (schlau machen)
 #include <fstream>
 
+// Test
 
 void command_help(){
     std::cout << "Hilfe" << std::endl;
