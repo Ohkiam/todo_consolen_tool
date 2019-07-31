@@ -19,15 +19,18 @@
 
 
 std::string my_tag = "";
-std::string my_todo = "";
-std::string my_file = "todos.md";
-std::string my_tag_file = "tags.md";
+std::string my_todo = "0";
+std::string my_file = "todos.txt";
+std::string my_tag_file = "tags.txt";
 
 
 
 
 
 /// hier die Funktionen
+
+
+
 
 /**
 * @description : Anzeigen welche Befehle es gibt
@@ -66,22 +69,39 @@ void comand_err(std::string a){
     return;
 }
 
-void write_file(std::string my_file, std::string my_tag, std::string my_todo = "0"){
-
+void write_file(){
+    #if 0
+    std::ofstream file(my_tag_file);
+    if(!file){
+        std::fstream datei(my_tag_file, std::fstream::out | std::fstream::app);
+    }
+    file.close();
+    std::ofstream file1(my_file);
+    if(!file1){
+        std::fstream datei(my_file, std::fstream::out | std::fstream::app);
+    }
+    file1.close();
+    #endif // 0
+    std::string save_file;
+    if(my_todo == "0"){
+        save_file = my_tag_file;
+	}else{
+	    save_file = my_file;
+	}
     std::fstream f;
-	f.open (my_file, std::fstream::out | std::fstream::app);
+	f.open (save_file, std::fstream::out | std::fstream::app);
 	//std::string text;
 	//std::cin >> text;
 	if(my_todo == "0"){
         f << my_tag << " # " <<"\n";
+        std::cout << "Das Schlagwort: " << my_tag << " wurde gespeichert!" << std::endl;
 	}else{
 	    f << my_tag << " # " << my_todo <<"\n";
+	    std::cout << "Das Todo: \n" << my_todo << "\n \n wurde gespeichert in " << std::endl;
 	}
 	f.close();
-	std::cout << "Das Schlagwort: " << my_tag << " wurde gespeichert!" << std::endl;
-	if(my_todo != "0"){
-        std::cout << "Das Todo: \n" << my_todo << "\n \n wurde gespeichert" << std::endl;
-	}
+
+
 	return;
 
 
@@ -103,7 +123,7 @@ void write_file(std::string my_file, std::string my_tag, std::string my_todo = "
 void command_tag(){
     std::cout << "Schlagwort erstellen" << std::endl;
     getline(std::cin, my_tag);
-	write_file(my_tag_file, my_tag);
+	write_file();
 	return;
 }
 
@@ -123,22 +143,18 @@ void command_tag(){
 * @return: Was wird zurück gegeben
 */
 void command_todo(){
-    std::cout << "Aufgabe erstellen" << std::endl;
-	//std::cin >> my_todo;
-	getline(std::cin, my_todo);
-	std::cout << "welches Schlagwort?" << std::endl;
-	//std::cin >> my_tag;
+    //std::cin >> my_tag;
+	std::cout << "Schlagwort ?" << std::endl;
 	getline(std::cin, my_tag);
 
+	check_tag();
 
-	check_tag(my_tag);
+	std::cout << "Aufgabe erstellen" << std::endl;
+	//std::cin >> my_todo;
 
+	getline(std::cin, my_todo);
 
-
-
-
-
-    write_file(my_file, my_tag, my_todo);
+    write_file();
     return;
 }
 /**
@@ -161,7 +177,8 @@ void command_list_tag(){
     while (!f.eof())          // Solange noch Daten vorliegen
     {
         getline(f, s);        // Lese eine Zeile
-        std::cout << s << std::endl;    // Zeige sie auf dem Bildschirm
+        std::cout << "\t" << s.substr(0, s.size()-2) << std::endl;    // Zeige sie auf dem Bildschirm und nehme das # weg
+
 
     }
     f.close();                // Datei wieder schließen
@@ -187,22 +204,46 @@ void command_list_todo(){
         command_list_tag();
         std::cout << "mit welchem Schlagwort soll gesucht werden: " << std::endl;
 
-        /// Irgendwo hier wird nicht eingelesen und angezeigt
+        /// Hääää???
 
+        std::string suche;
+        std::cin >> suche;
+        std::cout << "\n" << std::endl;
+        int counter = 1;
         std::string s;
-        std::cin >> s;
         std::ifstream f;  // Datei-Handle
         f.open(my_file, std::fstream::in); // Öffne Datei aus Parameter
         while (!f.eof())          // Solange noch Daten vorliegen
         {
             getline(f, s);        // Lese eine Zeile
-            if(s.find(s) == true){
-                std::cout << s << std::endl;
+            //std::cout << s << std::endl;
+            //std::cout << suche << std::endl;
+            /// Hier gibt es zwei möglichkeiten um zum gesuchten zu kommen
+            #if 0 /// Variante eins
+            if(s.find(suche) == false){
+                //std::cout << s.find("kind") << "    Suchwort: " << suche << " im String " << s << std::endl;
             }
+            #endif // 0
+            #if 1 /// Variante zwei (mein Favorit)
+            if(s.find(suche) != std::string::npos){
+                //std::cout << s.find(suche) << "     Suchwort: " << suche << " im String " << s << std::endl;
+                std::cout << "\n \t" << counter++ << s.replace(s.find(s[0]), std::string(suche).length()+2 , "") << "\n" << std::endl;
+                //s.replace(s.find(s[0]), std::string(suche).length(), "");
+            }
+            #endif // 1
         }
         f.close();                // Datei wieder schließen
     }else{
-        command_list_todo();
+        std::string s;
+        std::ifstream f;  // Datei-Handle
+        f.open(my_file, std::fstream::in); // Öffne Datei aus Parameter
+        while (!f.eof())          // Solange noch Daten vorliegen
+        {
+            getline(f, s);        // Lese eine Zeile
+            std::cout << s << std::endl;
+
+        }
+        f.close();                // Datei wieder schließen
     }
 
 
@@ -213,7 +254,7 @@ void command_list_todo(){
     r.replace( r.find( "Fuchs"), strlen("Fuchs"), "Hund");
     */
 }
-void check_tag(std::string my_tag){
+void check_tag(){
     	/// Prüfung ob das Schlagwort existiert, wenn nicht Schlagwort erstellen (mit Rückfrage)
 	std::ifstream f;  // Datei-Handle
     std::string s;
@@ -222,8 +263,9 @@ void check_tag(std::string my_tag){
     while (!f.eof())          // Solange noch Daten vorliegen
     {
         getline(f, s);        // Lese eine Zeile
-        if(s.find(my_tag) == true){
+        if(s.find(my_tag) != std::string::npos){
             is_found = true;
+            std::cout << s.find(my_tag) << "   existiert" << std::endl;
         }
     }
     f.close();                // Datei wieder schließen
@@ -237,7 +279,7 @@ void check_tag(std::string my_tag){
         if(j_n == "n"){
             command_tag();
         }else{
-            write_file(my_tag_file, my_tag);
+            write_file(); /// hier stimmt was nicht, nehme an die "übergabe" in welcher Datei geschrieben werden soll
         }
     }
 

@@ -1,3 +1,0 @@
-Arbeit # 
-Schule # 
-Kind # 
