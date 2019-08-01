@@ -14,7 +14,7 @@
 
 
 #include <stdio.h>
-#include "header.h"
+#include "header.hpp"
 
 
 
@@ -69,7 +69,22 @@ void comand_err(std::string a){
     return;
 }
 
-void write_file(){
+void write_file(std::string todo = "0"){
+    #if 1
+    // Dateizeiger erstellen
+    FILE *fp;
+
+    // Datei oeffnen
+    fp = fopen("tags.txt", "r");
+
+    if(fp == NULL) {
+        printf("Datei konnte NICHT geoeffnet werden.\n");
+    }else {
+        printf("Datei konnte geoeffnet werden.\n");
+        // Datei schliessen
+        fclose(fp);
+    }
+    #endif // 0
     #if 0
     std::ofstream file(my_tag_file);
     if(!file){
@@ -94,12 +109,23 @@ void write_file(){
 	//std::cin >> text;
 	if(my_todo == "0"){
         f << my_tag << " # " <<"\n";
-        std::cout << "Das Schlagwort: " << my_tag << " wurde gespeichert!" << std::endl;
+        std::cout << "\n \n Das Schlagwort: \n " << my_tag << "\n \n wurde gespeichert!" << std::endl;
 	}else{
 	    f << my_tag << " # " << my_todo <<"\n";
-	    std::cout << "Das Todo: \n" << my_todo << "\n \n wurde gespeichert in " << std::endl;
+	    std::cout << "\n \n Das Todo: \n " << my_todo << "\n \n wurde gespeichert" << std::endl;
 	}
 	f.close();
+
+
+	if(todo != "0"){
+        std::fstream fr;
+        fr.open (my_tag_file, std::fstream::out | std::fstream::app);
+
+        fr << my_tag << " # " <<"\n";
+        std::cout << "\n \n Das Schlagwort: \n " << my_tag << "\n \n wurde gespeichert!" << std::endl;
+
+	fr.close();
+	}
 
 
 	return;
@@ -143,18 +169,19 @@ void command_tag(){
 * @return: Was wird zurück gegeben
 */
 void command_todo(){
+    std::cout << "Aufgabe erstellen" << std::endl;
+	//std::cin >> my_todo;
+
+	getline(std::cin, my_todo);
+
     //std::cin >> my_tag;
 	std::cout << "Schlagwort ?" << std::endl;
 	getline(std::cin, my_tag);
 
 	check_tag();
 
-	std::cout << "Aufgabe erstellen" << std::endl;
-	//std::cin >> my_todo;
 
-	getline(std::cin, my_todo);
-
-    write_file();
+    //write_file();
     return;
 }
 /**
@@ -196,6 +223,7 @@ void command_list_tag(){
 * @return: strings
 */
 void command_list_todo(){
+    int counter = 1;
     std::cout << "Aufgaben: " << std::endl;
     std::cout << "Wollen Sie sich die Schlagwoerter anzeigen lassen? \nJa (j) /Nein (n): " << std::endl;
     std::string j_n;
@@ -209,7 +237,6 @@ void command_list_todo(){
         std::string suche;
         std::cin >> suche;
         std::cout << "\n" << std::endl;
-        int counter = 1;
         std::string s;
         std::ifstream f;  // Datei-Handle
         f.open(my_file, std::fstream::in); // Öffne Datei aus Parameter
@@ -240,19 +267,14 @@ void command_list_todo(){
         while (!f.eof())          // Solange noch Daten vorliegen
         {
             getline(f, s);        // Lese eine Zeile
-            std::cout << s << std::endl;
+            std::cout << "\n \t" << counter++ << s.substr(0, s.size()-2) << std::endl;
 
         }
         f.close();                // Datei wieder schließen
     }
 
 
-/*
-    /// Damit tag und # mit "" ersetzen
-    string r = "Der Fuchs ist in der Hundehütte";
-    // Wie? Ersetze Fuchs mit Hund!
-    r.replace( r.find( "Fuchs"), strlen("Fuchs"), "Hund");
-    */
+
 }
 void check_tag(){
     	/// Prüfung ob das Schlagwort existiert, wenn nicht Schlagwort erstellen (mit Rückfrage)
@@ -279,7 +301,7 @@ void check_tag(){
         if(j_n == "n"){
             command_tag();
         }else{
-            write_file(); /// hier stimmt was nicht, nehme an die "übergabe" in welcher Datei geschrieben werden soll
+            write_file(my_todo);
         }
     }
 

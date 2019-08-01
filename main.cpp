@@ -5,8 +5,8 @@
 #pragma once  ///* Sorgt dafür das Headerdateien nur einmal eingebunden werden */
 
 #include <stdio.h>
-#include "header.h"
-#include "funktionen.h"
+#include "header.hpp"
+//#include "funktionen.h"
 
 /// Schalter für Windows/Linux
 //#undef WINDOWS

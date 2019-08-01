@@ -12,7 +12,7 @@ void command_help();
 
 void comand_err(std::string a);
 
-void write_file();
+void write_file(std::string todo);
 
 void command_tag();
 
