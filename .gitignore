@@ -9,3 +9,4 @@ todo_consolen_tool/todo_consolen_tool.cbp
 *.workspace
 bin/
 ob/
+*.depend
