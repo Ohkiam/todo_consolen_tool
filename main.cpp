@@ -1,48 +1,61 @@
-/// Maik Hoffmann
-/// C++ Basics E228
-/// * Dieses Tool soll das Alter abfragen und ausgeben können
+/**
+* @autor : Maik Hoffmann
+*
+* @name : ConsolenToDo
+*
+* @description : Speichern und Ausgeben von ToDos (Aufgaben) in der Shell
+*
+* @todos : siehe todo.md im Projektordner
+*
+*
+* @date : 01.08.2019
+*/
 
-#pragma once  ///* Sorgt dafür das Headerdateien nur einmal eingebunden werden */
+#pragma once            /** Sorgt dafür das Headerdateien nur einmal eingebunden werden */
 
+/** Bibliotheken */
 #include <stdio.h>
 #include "header.hpp"
-//#include "funktionen.h"
 
-/// Schalter für Windows/Linux
+/** Schalter für Windows/Linux */
 //#undef WINDOWS
 #define WINDOWS
 
 
-///* Ein und ausgabe von Dateien
-// https://www.kompf.de/cplus/artikel/fwords.html
-
-
-
-#if 0 // 1 ist für anschalten damit der code benutzt wird (0 zum ausschalten)
-// Zum testen von Funktionen kann es benutzt werden
-
-void command_list_tag(){
-    std::cout << "Schlagwörter: anzeigen lassen " << std::endl;
-}
-
-#endif
 
 int main(int argc, char **argv)
 {
+    /**
+    * @description : Schalter für den Aufruf der Gui
+    *
+    * @param : Anzahl der übergebenen Parameter
+    *
+    * @todo : Diese Funktion muss noch augelagert werden, Problem ist die Übernahme der main Parameter (nochmal schlau machen ob es mit carsten geht)
+    *
+    * @throws :
+    * @error :
+    * @return:
+    */
     if(argc < 2){
-        #ifdef WINDOWS
-            /// Hier kommt nachher der Aufruf für die Gui rein
+        #ifdef WINDOWS  /// Hier kommt nachher der Aufruf für die Gui rein
             std::cout << "nur prog.exe in Windows aufgerufen" << std::endl;
-        #else
-            /// Hier kommt nachher der Aufruf für die Gui rein
+        #else           /// Hier kommt nachher der Aufruf für die Gui rein
             std::cout << "nur prog in Linux aufgerufen" << std::endl;
         #endif // WINDOWS
-
-
         return 0;
     }
+    /**
+    * @description : Schleife zum Auslesen der übergebenen Parameter beim Programmaufruf und aufruf der entsprechenden Funktionen
+    *
+    * @param : argc, argv
+    *
+    * @todo : Diese Funktion muss noch augelagert werden, Problem ist die Übernahme der main Parameter (nochmal schlau machen ob es mit carsten geht)
+    *
+    * @throws :
+    * @error :
+    * @return:
+    */
     int i;
-
     for(i=0; i<argc; i++)
 	{
         #if 0
@@ -64,8 +77,8 @@ int main(int argc, char **argv)
 		#if 1
 		// hier werden die Strings verglichen mit !strcmp
 		// wichtig ist das sring.h eingebunden wird
-        if(!strcmp( argv[i], "main.exe" )){
-            // hier soll erstmall nix passieren
+        if(!strcmp( argv[i], "todo_consolen_tool.exe" )){
+
         }else if(!strcmp( argv[i], "help" )){
             command_help();
             return 0;
@@ -83,18 +96,10 @@ int main(int argc, char **argv)
             return 0;
         }else{
             std::string a = argv[i];
-            //std::cout << argv[i] << "haha" << std::endl; /// @todo warum funzt das nicht, warum ruft er bei falschem Befehl zweimal die Funktion command_list_
             comand_err(a);
-            //return 0;
+            return 0;
         }
         #endif // if Spungliste
-
     }
-
 return 0;
 }
-
-
-
-
-
